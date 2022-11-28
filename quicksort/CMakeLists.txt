@@ -12,9 +12,10 @@ if(NOT parlaylib_POPULATED)
     add_subdirectory(${parlaylib_SOURCE_DIR} ${parlaylib_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-file (GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*")
+file (GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*")
+file (GLOB_RECURSE IMPL CONFIGURE_DEPENDS "impl/*")
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(quicksort main.cpp ${SOURCES})
+add_executable(quicksort main.cpp ${SOURCES} ${IMPL})
 target_link_libraries(quicksort PRIVATE parlay)
