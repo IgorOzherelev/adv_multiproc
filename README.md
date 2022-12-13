@@ -38,19 +38,19 @@ AVERAGE[11144 in ms]<br />
 
 # Результаты запусков
 started sequential
-REPEAT[0]TIME[170862 in ms]
-REPEAT[1]TIME[152398 in ms]
-REPEAT[2]TIME[152735 in ms]
-REPEAT[3]TIME[162883 in ms]
-REPEAT[4]TIME[156200 in ms]
-AVERAGE[159015 in ms]
+REPEAT[0]TIME[170862 in ms]<br />
+REPEAT[1]TIME[152398 in ms]<br />
+REPEAT[2]TIME[152735 in ms]<br />
+REPEAT[3]TIME[162883 in ms]<br />
+REPEAT[4]TIME[156200 in ms]<br />
+AVERAGE[159015 in ms]<br />
 
 started parallel
-REPEAT[0]TIME[55068 in ms]
-REPEAT[1]TIME[55983 in ms]
-REPEAT[2]TIME[55898 in ms]
-REPEAT[3]TIME[56974 in ms]
-REPEAT[4]TIME[57158 in ms]
-AVERAGE[56216 in ms]
+REPEAT[0]TIME[55068 in ms]<br />
+REPEAT[1]TIME[55983 in ms]<br />
+REPEAT[2]TIME[55898 in ms]<br />
+REPEAT[3]TIME[56974 in ms]<br />
+REPEAT[4]TIME[57158 in ms]<br />
+AVERAGE[56216 in ms]<br />
 
 Итого, ускорение 159015 / 56216 = 2.83
