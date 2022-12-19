@@ -1,0 +1,4 @@
+#ifndef BST_BENCHMARK_HPP
+#define BST_BENCHMARK_HPP
+
+#endif //BST_BENCHMARK_HPP
