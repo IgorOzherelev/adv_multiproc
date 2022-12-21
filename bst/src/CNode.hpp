@@ -25,6 +25,8 @@ public:
         this->left = nullptr;
         this->right = nullptr;
         this->parent = nullptr;
+        this->succ = nullptr;
+        this->pred = nullptr;
     }
 };
 
