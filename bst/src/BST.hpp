@@ -9,9 +9,10 @@ enum State {
 template<typename T>
 class BST {
 public:
-    virtual bool contains() = 0;
-    virtual bool insert() = 0;
-    virtual bool remove() = 0;
+    virtual bool contains(T key) = 0;
+    virtual bool insert(T key) = 0;
+    virtual bool remove(T key) = 0;
+    virtual void inorder_traversal() = 0;
 };
 
 #endif //BST_BST_HPP
