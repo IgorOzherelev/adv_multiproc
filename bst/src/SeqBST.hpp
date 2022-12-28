@@ -19,7 +19,7 @@ public:
 
     explicit SeqNode(T key, State state) : key(key), state(state) {}
 
-    virtual ~SeqNode() {}
+    virtual ~SeqNode() = default;
 };
 
 class SeqBST : public BST<int> {
@@ -132,7 +132,7 @@ public:
         return true;
     }
 
-    void inorder_traversal() override {
+    std::vector<int> inorder_traversal() override {
         std::vector<int> list = {};
         std::stack<SeqNode<int>*> stack = {};
         SeqNode<int>* curr = root;
@@ -150,11 +150,7 @@ public:
             curr = curr->right;
         }
 
-        std::cout << std::endl;
-        for (int vertex: list) {
-            std::cout << vertex << " ";
-        }
-        std::cout << std::endl;
+        return list;
     }
 };
 
