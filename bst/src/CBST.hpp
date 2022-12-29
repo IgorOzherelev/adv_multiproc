@@ -17,7 +17,7 @@ public:
     CNode<T>* right;
     State state = DATA;
 
-    std::atomic<bool> deleted;
+    std::atomic<bool> deleted{false};
 
     // lock_shared() - reader
     // lock() - writer
@@ -104,9 +104,9 @@ public:
     }
 };
 
-class CBST : public BST<int> {
+class CBST : public BST<uint32_t> {
 private:
-    bool checkDeleted(CNode<int>* node) {
+    bool checkDeleted(CNode<uint32_t>* node) {
         if (node != nullptr && node->deleted) {
             return true;
         }
@@ -114,10 +114,10 @@ private:
         return false;
     }
 
-    std::vector<CNode<int>*> traversal(int key) {
+    std::vector<CNode<uint32_t>*> traversal(uint32_t key) {
         while (true) {
-            auto* g_prev = new CNode<int>();
-            auto* prev = new CNode<int>();
+            auto* g_prev = new CNode<uint32_t>();
+            auto* prev = new CNode<uint32_t>();
             auto* curr = root;
 
             while (curr != nullptr) {
@@ -145,7 +145,7 @@ private:
         }
     }
 
-    void lock_one_child_vertex(CNode<int> *prev, CNode<int> *curr, CNode<int> *child) {
+    void lock_one_child_vertex(CNode<uint32_t> *prev, CNode<uint32_t> *curr, CNode<uint32_t> *child) {
         prev->tryLockEdgeRef(curr);
         curr->tryWriteLockState(DATA);
 
@@ -160,7 +160,7 @@ private:
         curr->tryLockEdgeRef(child);
     }
 
-    CNode<int> *lockLeaf(int key, CNode<int> *prev, CNode<int> *curr) {
+    CNode<uint32_t> *lockLeaf(uint32_t key, CNode<uint32_t> *prev, CNode<uint32_t> *curr) {
         prev->tryLockEdgeVal(curr);
 
         if (key < prev->key) {
@@ -178,23 +178,23 @@ private:
     }
 
 public:
-    CNode<int>* root;
+    CNode<uint32_t>* root;
 
     explicit CBST() {
-        this->root = new CNode<int>(INT_MAX, DATA);
+        this->root = new CNode<uint32_t>(INT32_MAX, DATA);
     }
 
     virtual ~CBST() = default;
 
-    bool contains(int key) override {
-        std::vector<CNode<int>*> traversal = this->traversal(key);
-        CNode<int>* curr = traversal[2];
+    bool contains(uint32_t key) override {
+        std::vector<CNode<uint32_t>*> traversal = this->traversal(key);
+        CNode<uint32_t>* curr = traversal[2];
 
         return curr != nullptr && curr->state == DATA;
     }
 
-    bool insert(int key) override {
-        std::vector<CNode<int>*> traversal = this->traversal(key);
+    bool insert(uint32_t key) override {
+        std::vector<CNode<uint32_t>*> traversal = this->traversal(key);
         auto* prev = traversal[1];
         auto* curr = traversal[2];
 
@@ -207,7 +207,7 @@ public:
             curr->state = DATA;
             curr->state_lock.unlock();
         } else {
-            auto* new_node = new CNode<int>(key, DATA);
+            auto* new_node = new CNode<uint32_t>(key, DATA);
 
             if (key < prev->key) {
                 prev->tryLockLeftEdgeRef(nullptr);
@@ -231,8 +231,8 @@ public:
         return true;
     }
 
-    bool remove(int key) override {
-        std::vector<CNode<int>*> traversal = this->traversal(key);
+    bool remove(uint32_t key) override {
+        std::vector<CNode<uint32_t>*> traversal = this->traversal(key);
         auto* g_prev = traversal[0];
         auto* prev = traversal[1];
         auto* curr = traversal[2];
@@ -251,7 +251,7 @@ public:
             curr->state = ROUTING;
             curr->state_lock.unlock();
         } else if (curr->left != nullptr || curr->right != nullptr) {
-            CNode<int>* child = curr->left == nullptr ? curr->left : curr->right;
+            CNode<uint32_t>* child = curr->left == nullptr ? curr->left : curr->right;
 
             if (curr->key < prev->key) {
                 lock_one_child_vertex(prev, curr, child);
@@ -302,7 +302,7 @@ public:
                     curr->state_lock.unlock();
                 }
             } else {
-                CNode<int>* child;
+                CNode<uint32_t>* child;
                 if (curr->key < prev->key) {
                     child = prev->right;
                 } else {
@@ -353,10 +353,10 @@ public:
         return true;
     }
 
-    std::vector<int> inorder_traversal() override {
-        std::vector<int> list = {};
-        std::stack<CNode<int>*> stack = {};
-        CNode<int>* curr = root;
+    std::vector<uint32_t> inorder_traversal() override {
+        std::vector<uint32_t> list = {};
+        std::stack<CNode<uint32_t>*> stack = {};
+        CNode<uint32_t>* curr = root;
         while (curr != nullptr || !stack.empty()) {
             while (curr != nullptr) {
                 stack.push(curr);

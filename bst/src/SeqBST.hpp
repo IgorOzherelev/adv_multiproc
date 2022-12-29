@@ -22,11 +22,11 @@ public:
     virtual ~SeqNode() = default;
 };
 
-class SeqBST : public BST<int> {
+class SeqBST : public BST<uint32_t> {
 private:
-    std::vector<SeqNode<int> *> traversal(int key) {
-        auto* g_prev = new SeqNode<int>();
-        auto* prev = new SeqNode<int>();
+    std::vector<SeqNode<uint32_t> *> traversal(uint32_t key) {
+        auto* g_prev = new SeqNode<uint32_t>();
+        auto* prev = new SeqNode<uint32_t>();
         auto* curr = this->root;
 
         while (curr != nullptr) {
@@ -47,25 +47,25 @@ private:
     }
 
 public:
-    SeqNode<int>* root;
+    SeqNode<uint32_t>* root;
 
     explicit SeqBST() {
-        this->root = new SeqNode<int>(INT_MAX, DATA);
+        this->root = new SeqNode<uint32_t>(INT32_MAX, DATA);
     }
 
     virtual ~SeqBST() {}
 
-    bool contains(int key) override {
-        std::vector<SeqNode<int>*> traversal = this->traversal(key);
-        SeqNode<int>* curr = traversal[2];
+    bool contains(uint32_t key) override {
+        std::vector<SeqNode<uint32_t>*> traversal = this->traversal(key);
+        SeqNode<uint32_t>* curr = traversal[2];
 
         return curr != nullptr && curr->state == DATA;
     }
 
-    bool insert(int key) override {
-        std::vector<SeqNode<int>*> traversal = this->traversal(key);
-        SeqNode<int>* prev = traversal[1];
-        SeqNode<int>* curr = traversal[2];
+    bool insert(uint32_t key) override {
+        std::vector<SeqNode<uint32_t>*> traversal = this->traversal(key);
+        SeqNode<uint32_t>* prev = traversal[1];
+        SeqNode<uint32_t>* curr = traversal[2];
 
         if (curr != nullptr) {
             if (curr->state == DATA) {
@@ -74,7 +74,7 @@ public:
 
             curr->state = DATA;
         } else {
-            auto* new_node = new SeqNode<int>(key, DATA);
+            auto* new_node = new SeqNode<uint32_t>(key, DATA);
 
             if (prev->key > key) {
                 prev->left = new_node;
@@ -86,8 +86,8 @@ public:
         return true;
     }
 
-    bool remove(int key) override {
-        std::vector<SeqNode<int>*> traversal = this->traversal(key);
+    bool remove(uint32_t key) override {
+        std::vector<SeqNode<uint32_t>*> traversal = this->traversal(key);
         auto* g_prev = traversal[0];
         auto* prev = traversal[1];
         auto* curr = traversal[2];
@@ -99,7 +99,7 @@ public:
         if (curr->left != nullptr && curr->right != nullptr) {
             curr->state = ROUTING;
         } else if (curr->left != nullptr || curr->right != nullptr) {
-            SeqNode<int>* child = curr->left != nullptr ? curr->left : curr->right;
+            SeqNode<uint32_t>* child = curr->left != nullptr ? curr->left : curr->right;
 
             if (curr->key < prev->key) {
                 prev->left = child;
@@ -114,7 +114,7 @@ public:
                     prev->right = nullptr;
                 }
             } else {
-                SeqNode<int>* child;
+                SeqNode<uint32_t>* child;
                 if (curr == prev->left) {
                     child = prev->right;
                 } else {
@@ -132,10 +132,10 @@ public:
         return true;
     }
 
-    std::vector<int> inorder_traversal() override {
-        std::vector<int> list = {};
-        std::stack<SeqNode<int>*> stack = {};
-        SeqNode<int>* curr = root;
+    std::vector<uint32_t> inorder_traversal() override {
+        std::vector<uint32_t> list = {};
+        std::stack<SeqNode<uint32_t>*> stack = {};
+        SeqNode<uint32_t>* curr = root;
         while (curr != nullptr || !stack.empty()) {
             while (curr != nullptr) {
                 stack.push(curr);
